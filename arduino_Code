@@ -1,19 +1,16 @@
-#include <FirebaseESP8266.h>
-#include <FirebaseESP8266HTTPClient.h>
-#include <FirebaseFS.h>
-#include <FirebaseJson.h>
-#include <DHT.h>
+
+#include <FirebaseESP8266.h> // Install Firebase ESP8266 library
 #include <ESP8266WiFi.h>
+#include <DHT.h>   
+#define FIREBASE_HOST "Isi link url dari Firebase"  
+#define FIREBASE_AUTH "Isi dengan token yang ada di Firebase"
+#define WIFI_SSID "isi nama wifi kalian"
+#define WIFI_PASSWORD "isi password wifi kalian"
 
-#define DHTPIN D5
-#define DHTTYPE DHT11
+#define DHTPIN 4    // Connect Data pin of DHT to D2
+
+#define DHTTYPE    DHT11
 DHT dht(DHTPIN, DHTTYPE);
-
-// Set these to run example.
-#define FIREBASE_HOST "https://dht11-12a9b-default-rtdb.firebaseio.com/" //ubah menjadi host yang ada di firebase
-#define FIREBASE_AUTH "TLaC6NsjKuaZGPmW7AoNf1I6sL6gDByNVazARSX9" //ubah menjadi authentic token yang ada di akun kalian di firebase
-#define WIFI_SSID "nama wifi kalian"
-#define WIFI_PASSWORD "password wifi kalian"
 
 //Define FirebaseESP8266 data object
 FirebaseData firebaseData;
@@ -21,16 +18,19 @@ FirebaseData firebaseData;
 
 FirebaseJson json;
 
-void setup() {
-  Serial.begin(115200);
-  Serial.println("DHT11 test!");
+void setup()
+{
+
+  Serial.begin(9600);
+
   dht.begin();
-  // connect to wifi.
+  
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-  Serial.print("connecting");
-  while (WiFi.status() != WL_CONNECTED) {
+  Serial.print("Connecting to Wi-Fi");
+  while (WiFi.status() != WL_CONNECTED)
+  {
     Serial.print(".");
-    delay(500);
+    delay(300);
   }
   Serial.println();
   Serial.print("Connected with IP: ");
